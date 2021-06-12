@@ -26,6 +26,7 @@
                 @change="searched(search)"
                 hide-selected
                 append-icon=""
+                class="text-button"
             ></v-autocomplete>
           </v-card-title>
         </v-card>
@@ -160,15 +161,20 @@ export default {
       }
       return 1
     },
-    name(item) {
+    name(item, appendCourse = false) {
       let version = this.version(item);
-      if (item.name.startsWith(".")) {
-        return item.name.replaceAll("_", " ")
-      } else if (version !== 1) {
-        return item.name.replace("_V" + version.toString(), "").replaceAll("_", " ")
-      } else {
-        return item.name.replaceAll("_", " ")
+      let name = item.name;
+      if (version !== 1) {
+        name = name.replace("_V" + version.toString(), "")
       }
+
+      name = item.name.replaceAll("_", " ")
+
+      if (appendCourse) {
+        name = name + " | " + item.path.replace(store.state.iliasDir, "").split("/")[1]
+      }
+
+      return name
     },
     icon(item) {
       if (item.children != null) {
@@ -190,7 +196,7 @@ export default {
     getItemsRec(inp) {
       let items = []
       inp.forEach(item => {
-        let name = this.name(item)
+        let name = this.name(item, true)
         if (!name.startsWith(".")) {
           items.push({
             name: name,
@@ -207,3 +213,12 @@ export default {
   }
 }
 </script>
+<style>
+.v-list-item__title {
+  text-transform: uppercase;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  size: 0.875rem;
+  letter-spacing: .05em;
+}
+</style>
