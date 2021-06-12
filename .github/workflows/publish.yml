@@ -7,8 +7,10 @@ on:
 jobs:
   create-release:
     runs-on: ubuntu-latest
-
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
+
       - uses: actions/checkout@v2
       - name: setup node
         uses: actions/setup-node@v1
@@ -36,8 +38,9 @@ jobs:
   create-and-upload-assets:
     needs: create-release
     runs-on: ${{ matrix.platform }}
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     timeout-minutes: 30
-
     strategy:
       fail-fast: false
       matrix:
