@@ -1,4 +1,4 @@
-# ilias-gui
+# ilias-native-ui
 
 ## [Download here](https://github.com/Mari-W/ilias-native-ui/releases) :)
 
