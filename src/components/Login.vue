@@ -44,7 +44,7 @@
 
     <v-row class="text-center mt-10" align="center" justify="center">
       <v-col cols="12" sm="5">
-        <v-card flat>
+        <v-card flat v-if="!dialog">
           <v-card-title class="justify-center" v-if="initialized">
             LOGIN using RZ ACCOUNT
           </v-card-title>
