@@ -75,7 +75,7 @@ export default {
       if (to.path === "/root/updated") {
         this.index(true)
         this.$router.push("/root/syncing")
-      } else if (to.path === "root/finished") {
+      } else if (to.path === "/root/finished") {
         this.index(true)
         this.$router.push("/root/")
       }
