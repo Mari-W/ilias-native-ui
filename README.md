@@ -27,3 +27,6 @@ This program downloads ALL files from ilias, you may want to leave all the cours
 ### Open files with your OS default program
 
 ![Alt text](src/assets/ilias4.png?raw=true "Open")
+
+## Inspired by 
+https://github.com/Septias/BetterIlias
