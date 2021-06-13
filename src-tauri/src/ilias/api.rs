@@ -127,6 +127,7 @@ impl IliasApi {
             )
         };
 
+        // new client with special policy
         let client = reqwest::Client::builder()
             .redirect(Policy::custom(|attempt| {
                 if attempt.previous().len() > 1 {
@@ -190,9 +191,7 @@ impl IliasApi {
 
     pub async fn download_file(&self, uri: String, mut path: PathBuf, name: String) -> Result<(), IliasError> {
         let token = self.token.read().await.as_ref().ok_or(IliasError::Unauthorized)?.to_string();
-
-        let client = reqwest::Client::new();
-        let mut res = client.get(uri)
+        let mut res = self.client.get(uri)
             .header(
                 "cookie",
                 format!("PHPSESSID={}", token),

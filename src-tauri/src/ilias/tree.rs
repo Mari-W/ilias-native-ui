@@ -6,8 +6,6 @@ use std::path::PathBuf;
 use tokio::fs;
 use futures::future::join_all;
 use async_recursion::async_recursion;
-use std::io::Error;
-use tokio::fs::ReadDir;
 
 const ILIAS_ROOT: &str = "ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships";
 
