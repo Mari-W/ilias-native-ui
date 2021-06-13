@@ -2,7 +2,7 @@
 name = "ilias-native-ui"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Marius Weidner"]
 license = ""
 repository = ""
 default-run = "ilias-native-ui"

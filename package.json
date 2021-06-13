@@ -1,5 +1,6 @@
 {
   "name": "ilias-native-ui",
+  "author": "Marius Weidner",
   "version": "0.1.0",
   "private": true,
   "scripts": {
