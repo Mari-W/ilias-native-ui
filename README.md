@@ -1,6 +1,6 @@
 # ilias-native-ui
 
-## [Download here](https://github.com/Mari-W/ilias-native-ui/releases) :)
+## [Download here](https://github.com/Mari-W/ilias-native-ui/releases/latest) :)
 
 ## Note
 
