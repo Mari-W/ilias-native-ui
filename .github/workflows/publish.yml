@@ -54,7 +54,7 @@ jobs:
             ext: .app
             compressed: .tgz
           - platform: windows-latest
-            buildFolder: ''
+            buildFolder: bundle/msi
             ext: _0.1.0_x64.msi
             compressed: ''
 
