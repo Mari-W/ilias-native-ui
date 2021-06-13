@@ -6,6 +6,8 @@ use std::path::PathBuf;
 use tokio::fs;
 use futures::future::join_all;
 use async_recursion::async_recursion;
+use std::io::Error;
+use tokio::fs::ReadDir;
 
 const ILIAS_ROOT: &str = "ilias.php?baseClass=ilPersonalDesktopGUI&cmd=jumpToMemberships";
 
@@ -79,7 +81,7 @@ impl IliasContainer {
     }
 
     pub fn name(&self) -> Option<String> {
-        if self.title == "" {
+        if self.title.is_empty() {
             return Some("".to_string());
         }
 
@@ -102,8 +104,7 @@ pub async fn sync_tree(container: IliasContainer, api: &IliasApi, mut path: Path
             let name = container.name().ok_or(IliasError::ParsingFailed)?;
             let dir = fs::read_dir(&path).await;
 
-            if dir.is_ok() {
-                let mut dir = dir.unwrap();
+            if let Ok(mut dir) = dir {
                 while let Some(entry) = dir.next_entry().await.map_err(|_| IliasError::IOOperationFailed)? {
                     if entry.path().to_str().unwrap().contains(name.as_str()) {
                         println!("already found {}", &name);
@@ -128,8 +129,7 @@ pub async fn sync_tree(container: IliasContainer, api: &IliasApi, mut path: Path
                 .select(&CONTAINERS)
                 .into_iter()
                 .map(IliasContainer::new)
-                .filter(|c| c.is_some())
-                .map(|c| c.unwrap())
+                .flatten()
                 .collect();
 
             // println!("{}: {:#?}", path.to_str().unwrap(), &children);
