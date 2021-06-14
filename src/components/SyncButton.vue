@@ -54,7 +54,7 @@ export default {
       this.$router.push("/root/syncing")
       let upd = setInterval(() => {
         this.$router.push("/root/updated")
-      }, 5000);
+      }, 3000);
       invoke("sync", {root: store.state.iliasDir}).then(() => {
         clearInterval(upd)
         this.syncing = false;

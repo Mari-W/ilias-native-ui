@@ -148,7 +148,7 @@ export default {
         this.items = old.items;
         this.path = old.path;
       } else {
-        this.path = "/"
+        this.path = ""
       }
     },
     version(item) {

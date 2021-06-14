@@ -8,7 +8,7 @@ pub async fn login(
     username: String,
     password: String,
 ) -> Result<(), String> {
-    state.login(username, password).await.map_err(|e| e.to_string())
+    state.login(username, password).await.map_err(|e| e.message())
 }
 
 
@@ -22,7 +22,7 @@ pub async fn sync(
     if !path.exists() {
         Err("invalid local ilias root".to_string())
     } else {
-        sync_tree(IliasContainer::new_root(), &state, path).await.map_err(|e| e.to_string())
+        sync_tree(IliasContainer::new_root(), &state, path).await.map_err(|e| e.message())
     }
 }
 
@@ -30,6 +30,6 @@ pub async fn sync(
 pub async fn open(
     path: String,
 ) -> Result<(), String> {
-    open::that(path).map_err(|_| IliasError::IOOperationFailed.to_string())?;
+    open::that(path).map_err(|_| IliasError::IOOperationFailed.message())?;
     Ok(())
 }

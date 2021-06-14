@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use tokio::fs;
 use tokio::io::{AsyncWriteExt};
 
-pub const ILIAS_URL: &'static str = "https://ilias.uni-freiburg.de";
+pub const ILIAS_URL: &str = "https://ilias.uni-freiburg.de";
 
 pub type SharedToken = RwLock<Option<String>>;
 
@@ -31,7 +31,7 @@ pub enum IliasError {
 }
 
 impl IliasError {
-    pub fn to_string(&self) -> String {
+    pub fn message(&self) -> String {
         match self {
             IliasError::CreationFailed => "failed to create https client".to_string(),
             IliasError::ConnectionFailed => "failed to connect to ilias".to_string(),
@@ -70,7 +70,6 @@ impl IliasApi {
                 .send()
                 .await
                 .map_err(|_| IliasError::ConnectionFailed)?;
-
             (
                 body.url().as_str().to_owned(),
                 body
@@ -128,6 +127,7 @@ impl IliasApi {
             )
         };
 
+        // new client with special policy
         let client = reqwest::Client::builder()
             .redirect(Policy::custom(|attempt| {
                 if attempt.previous().len() > 1 {
@@ -191,9 +191,7 @@ impl IliasApi {
 
     pub async fn download_file(&self, uri: String, mut path: PathBuf, name: String) -> Result<(), IliasError> {
         let token = self.token.read().await.as_ref().ok_or(IliasError::Unauthorized)?.to_string();
-
-        let client = reqwest::Client::new();
-        let mut res = client.get(uri)
+        let mut res = self.client.get(uri)
             .header(
                 "cookie",
                 format!("PHPSESSID={}", token),
