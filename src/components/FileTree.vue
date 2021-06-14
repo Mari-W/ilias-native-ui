@@ -109,7 +109,7 @@ export default {
                     path: new_path
                   })
                   new_items = item.children
-                  new_path = new_path + "/" + item.name
+                  new_path = item.path
                 }
               })
             }
@@ -130,7 +130,7 @@ export default {
         })
 
         this.items = item.children
-        this.path = this.path + "/" + item.name
+        this.path = item.path
       } else {
         invoke("open", {path: item.path})
       }
